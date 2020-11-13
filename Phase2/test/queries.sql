@@ -1,3 +1,5 @@
+--Phase 2 queries
+
 --#1 Look at Park Locations
 SELECT p_Park_Name, p_Latitude, p_Longitude
 FROM Park_Locations;
@@ -35,8 +37,8 @@ SELECT p_Park_Name, pp_Jan_Precipitation, pp_Feb_Precipitation, pp_Mar_Precipita
 FROM Park_Precipitation, Park_Locations
 WHERE pp_Park_Name = p_Park_Name;
 
---#8 Find campsites in Yosemite that have noelectricity
-SELECT c_Campsite_Type, c_Park_Name
+--#8 Find campsites in Yosemite that have no electricity
+SELECT c_Campsite_Type, c_name, c_Park_Name
 FROM Campsites
 WHERE c_Park_Name LIKE '%Yosemite%' and
 c_Campsite_Type LIKE '%NONELECTRIC%';
@@ -45,7 +47,8 @@ c_Campsite_Type LIKE '%NONELECTRIC%';
 SELECT s_Common_Names, p_Park_Name
 FROM Species, Park_Locations
 WHERE s_Park_name = p_Park_Name AND
-s_Park_name LIKE '%Yosemite%';
+s_Park_name LIKE '%Yosemite%'
+ORDER BY s_Common_Names;
 
 --#10 Find Plant Species in Yosemite
 SELECT pl_Species, p_Park_Name

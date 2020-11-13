@@ -111,3 +111,15 @@ CREATE TABLE Park_Temps_Avg (
    pt_Dec_Avg_Low decimal (2,0) not null,
    pt_Dec_Avg_High decimal (2,0) not null
 );
+
+-------------------------------------------------------------------
+-- Import in sqlstudio or using the below commands in sqlite3
+-- .mode "csv"
+-- .separator ","
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CAfed_campsitesEDITED.csv' Campsites
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CANationalParkPlants.csv.csv' Plants
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CAParkAvgTemps.csv' Park_Temps_Avg
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CAParkLocations.csv' Park_Locations
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CAParkPrecipitation.csv' Park_Precipitation
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CAspecies.csv' Species
+-- .import '| tail -n +2 /home/jrenteria5/Desktop/DBProject/data/CATrails data - nationalpark.csv' Trails
