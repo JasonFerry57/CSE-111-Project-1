@@ -170,7 +170,7 @@ public class campingBuddy {
                         while (rs.next()) {
                             String var1 = rs.getString(1);
                             String var2 = rs.getString(2);
-                            System.out.println("\t" + var1 + ": " + var2);
+                            System.out.println("\t" + var1 + ": " + var2 + " Meters");
                         }
 
                         rs.close();
@@ -1207,7 +1207,7 @@ public class campingBuddy {
         }
 
         else {// Mistake
-            System.out.println("You have to select 1 or 2 only!");
+            System.out.println("You have to select 1 or 20 only!");
             return 50;
         }
     }
