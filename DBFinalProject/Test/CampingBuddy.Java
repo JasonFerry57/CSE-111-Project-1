@@ -69,51 +69,6 @@ public class campingBuddy {
         }
     }
 
-    // private void Q5() {
-    // System.out.println("++++++++++++++++++++++++++++++++++");
-    // System.out.println("Q5");
-
-    // try {
-    // File fn = new File("input/5.in");
-    // FileReader reader = new FileReader(fn);
-    // BufferedReader in = new BufferedReader(reader);
-    // String nation = in.readLine();
-    // in.close();
-
-    // FileWriter writer = new FileWriter("output/5.out", false);
-    // PrintWriter printer = new PrintWriter(writer);
-
-    // printer.printf("%-20s %20s\n", "region", "capacity");
-
-    // String sql = "SELECT r_name, sum(w_capacity) " +
-    // "FROM warehouse, nation nat1, nation nat2, supplier, region " +
-    // "WHERE w_suppkey = s_suppkey AND " +
-    // "w_nationkey = nat2.n_nationkey AND " +
-    // "nat1.n_nationkey = s_nationkey AND " +
-    // "nat2.n_regionkey = r_regionkey AND " +
-    // "nat1.n_name = 'UNITED STATES' " +
-    // "GROUP BY r_name";
-
-    // PreparedStatement stmt = c.prepareStatement(sql);
-    // ResultSet rs = stmt.executeQuery();
-
-    // while(rs.next()){
-    // String region = rs.getString(1);
-    // int capacity = rs.getInt(2);
-    // printer.printf("%-20s %20s\n", region, capacity);
-    // }
-
-    // rs.close();
-    // stmt.close();
-    // printer.close();
-    // writer.close();
-    // } catch (Exception e) {
-    // System.err.println(e.getClass().getName() + ": " + e.getMessage());
-    // }
-
-    // System.out.println("++++++++++++++++++++++++++++++++++");
-    // }
-
     public void Trails(String park) {
         // scanner initialization
         Scanner sd = new Scanner(System.in);
@@ -123,7 +78,8 @@ public class campingBuddy {
                 + "know? (Select the number adjacent to the info)");
 
         // a list containing all options for campsite queries
-        List<String> options = Arrays.asList("1. QQQQQQQ QUESTION1", "2. QQQQQQQ QUESTION2", "3. QQQQQQQ QUESTION3",
+        List<String> options = Arrays.asList("1. What trails are present?", "2. What is the shortest and longest trail?",
+            "3. How many trails are there?",
                 "0. I'm good, show me the info!");
 
         // prints the list
@@ -175,10 +131,12 @@ public class campingBuddy {
         for (int j : infoNumbers) {
             // switch case for each query of camps
             switch (j) {
-                case 1: // QUESTION1
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                case 1: // What trails are present?
+                    System.out.println("The trails that are present in " + park + " are: ");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT t_name "
+                        + "FROM Trails "
+                        + "WHERE t_area_name = '" + park + "' ";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -195,17 +153,24 @@ public class campingBuddy {
                     }
                     break;
 
-                case 2: // QUESTION2
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                case 2: // What is the shortest and longest trail?"
+                    System.out.println("In " + park + " the shortest and longest trails are: ");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT t_name, min(t_route_length) "
+                        + "FROM Trails "
+                        + "WHERE t_area_name = '" + park + "' "
+                        + "UNION ALL "
+                        + "SELECT t_name, max(t_route_length) "
+                        + "FROM Trails "
+                        + "WHERE t_area_name = '" + park + "' ";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
 
                         while (rs.next()) {
                             String var1 = rs.getString(1);
-                            System.out.println("\t" + var1);
+                            String var2 = rs.getString(2);
+                            System.out.println("\t" + var1 + ": " + var2);
                         }
 
                         rs.close();
@@ -215,10 +180,12 @@ public class campingBuddy {
                     }
                     break;
 
-                case 3: // QUESTION3
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                case 3: // How many trails are there?",
+                    System.out.println("The trail total in " + park + " is: ");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT count(DISTINCT t_name) "
+                        + "FROM Trails "
+                        + "WHERE t_area_name = '" + park + "' ";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -243,11 +210,11 @@ public class campingBuddy {
         Scanner sd = new Scanner(System.in);
 
         // default option
-        System.out.println("Above you selected QQQQQQQ TOPIC, what would you like to "
+        System.out.println("Above you selected Species, what would you like to "
                 + "know? (Select the number adjacent to the info)");
 
         // a list containing all options for campsite queries
-        List<String> options = Arrays.asList("1. QQQQQQQ QUESTION1", "2. QQQQQQQ QUESTION2", "3. QQQQQQQ QUESTION3",
+        List<String> options = Arrays.asList("1. What is the common species I'll see?", "2. How many species are there", "3. What unique species exists in this park?",
                 "0. I'm good, show me the info!");
 
         // prints the list
@@ -299,10 +266,14 @@ public class campingBuddy {
         for (int j : infoNumbers) {
             // switch case for each query of camps
             switch (j) {
-                case 1: // QUESTION1
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                case 1: // What is the common species I'll see?"
+                    System.out.println("The common species you'll see in " + park + " are: ");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT s_Common_Names "
+                        + "FROM Species "
+                        + "WHERE s_Abundance LIKE 'Common' AND "
+                        + "s_Park_name = '" + park + "' "
+                        + "ORDER BY s_Common_Names; ";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -319,10 +290,12 @@ public class campingBuddy {
                     }
                     break;
 
-                case 2: // QUESTION2
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                case 2: // How many species are there"
+                    System.out.println("In " + park + " the species count is: ");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT count(*) "
+                        + "FROM Species "
+                        + "WHERE s_Park_name = '" + park + "'; ";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -339,10 +312,24 @@ public class campingBuddy {
                     }
                     break;
 
-                case 3: // QUESTION3
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                case 3: // What unique species exists in this park?
+                    System.out.println("The species unique to " + park + " are: ");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT "
+                        + "DISTINCT s_Common_Names "
+                        + "FROM "
+                        + " species "
+                        + "WHERE "
+                        + " s_Park_name LIKE '" + park + "' AND "
+                        + " s_Scientific_Name NOT IN "
+                        + "     (SELECT "
+                        + "         s_Scientific_Name "
+                        + "     FROM "
+                        + "         species "
+                        + "     WHERE "
+                        + "         s_Park_name NOT LIKE '" + park + "' ) "
+                        + "ORDER BY "
+                        + " s_Common_Names; ";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -367,12 +354,14 @@ public class campingBuddy {
         Scanner sd = new Scanner(System.in);
 
         // default option
-        System.out.println("Above you selected QQQQQQQ TOPIC, what would you like to "
+        System.out.println("Above you selected Plant Species, what would you like to "
                 + "know? (Select the number adjacent to the info)");
 
         // a list containing all options for campsite queries
-        List<String> options = Arrays.asList("1. QQQQQQQ QUESTION1", "2. QQQQQQQ QUESTION2", "3. QQQQQQQ QUESTION3",
-                "0. I'm good, show me the info!");
+        List<String> options = Arrays.asList("1. How many plant species are located in " + park + "?", 
+                                             "2. What types of plant species are located in " + park + "?", 
+                                             "3. What is the common name of each plant species located in " + park + "?",
+                                             "0. I'm good, show me the info!");
 
         // prints the list
         for (String k : options) {
@@ -424,9 +413,12 @@ public class campingBuddy {
             // switch case for each query of camps
             switch (j) {
                 case 1: // QUESTION1
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                    System.out.println("1. How many plant species are located in " + park + "?");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT COUNT(pl_Species) " +
+                            "FROM Plants, Park_Locations " +
+                            "WHERE p_Park_Code = pl_Park_Code AND " +
+                            "p_Park_Name LIKE '" + park + "'";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -444,9 +436,13 @@ public class campingBuddy {
                     break;
 
                 case 2: // QUESTION2
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                    System.out.println("2. What types of plant species are located in " + park + "?");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT pl_Species " +
+                        "FROM Plants, Park_Locations " +
+                        "WHERE p_Park_Code = pl_Park_Code AND " +
+                        "p_Park_Name LIKE '" + park + "' " +
+                        "GROUP BY pl_Species";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -464,9 +460,13 @@ public class campingBuddy {
                     break;
 
                 case 3: // QUESTION3
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                    System.out.println("3. What is the common name of each plant species located in " + park + "?");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT pl_Common_Name " +
+                        "FROM Plants, Park_Locations " +
+                        "WHERE p_Park_Code = pl_Park_Code AND " +
+                        "p_Park_Name LIKE '" + park + "' " +
+                        "GROUP BY pl_Common_Name";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -495,8 +495,10 @@ public class campingBuddy {
                 + "know? (Select the number adjacent to the info)");
 
         // a list containing all options for campsite queries
-        List<String> options = Arrays.asList("1. What are the month of ... average highs and lows", "2. What are the month of ... average highs and lows",
-                 "3. What are the month of ... average highs and lows", "0. I'm good, show me the info!");
+        List<String> options = Arrays.asList("1. What is the Highest average temperature in " + park + "?", 
+                 "2. What is the Lowest average temperature in " + park + "?",
+                 "3. What are the month of December's average highs and lows in " + park + "?", 
+                 "0. I'm good, show me the info!");
 
         // prints the list
         for (String k : options) {
@@ -548,9 +550,13 @@ public class campingBuddy {
             // switch case for each query of camps
             switch (j) {
                 case 1: // QUESTION1
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                    System.out.println("1. What is the Highest average temperature in " + park + "?");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT MAX(pt_Jan_Avg_High, pt_Feb_Avg_High, pt_Mar_Avg_High, " +
+                        "pt_Apr_avg_high, pt_May_avg_high, pt_Jun_Avg_High, pt_Jul_Avg_High, " +
+                        "pt_Aug_Avg_High, pt_Sep_Avg_High, pt_Oct_Avg_High, pt_Nov_Avg_High, pt_Dec_Avg_High) " +
+                        "FROM Park_Temps_Avg " +
+                        "WHERE pt_Park_Name = '" + park + "'";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -568,9 +574,13 @@ public class campingBuddy {
                     break;
 
                 case 2: // QUESTION2
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                    System.out.println("2. What is the Lowest average temperature in " + park + "?");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT MIN(pt_Jan_Avg_High, pt_Feb_Avg_High, pt_Mar_Avg_High, " +
+                        "pt_Apr_avg_high, pt_May_avg_high, pt_Jun_Avg_High, pt_Jul_Avg_High, " +
+                        "pt_Aug_Avg_High, pt_Sep_Avg_High, pt_Oct_Avg_High, pt_Nov_Avg_High, pt_Dec_Avg_High) " +
+                        "FROM Park_Temps_Avg " +
+                        "WHERE pt_Park_Name = '" + park + "'";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
@@ -588,16 +598,19 @@ public class campingBuddy {
                     break;
 
                 case 3: // QUESTION3
-                    System.out.println("QQQQQQQANSWER STATEMENT");
+                    System.out.println("3. What are the month of December's average highs and lows in " + park + "?");
                     try {
-                        String sql = "QQQQQQQ SQL STATEMENT";
+                        String sql = "SELECT pt_Dec_Avg_High, pt_Dec_Avg_Low " +
+                                     "FROM Park_Temps_Avg " +
+                                     "WHERE pt_Park_Name = '" + park + "'";
 
                         PreparedStatement stmt = c.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery();
 
                         while (rs.next()) {
                             String var1 = rs.getString(1);
-                            System.out.println("\t" + var1);
+                            String var2 = rs.getString(2);
+                            System.out.println("\t" + var1 + " | " + var2);
                         }
 
                         rs.close();
@@ -609,7 +622,6 @@ public class campingBuddy {
             }
         }
     }
-
     public void Park_Precipitation(String park) {
 
         // scanner initialization
@@ -1084,18 +1096,90 @@ public class campingBuddy {
 
         return parkNamesArray[parkChosen - 1];
     }
+    
+    public void Popular(){
+        //1. 
+        System.out.println("Here are the Trails and species of plants you might see on the trails in Yosemite");
+        try {
+            String sql = "SELECT Distinct p_Park_Name, pl_Species, t_name, t_geoloc, t_route_length "
+            + "FROM Park_Locations, Trails, Plants "
+            + "WHERE p_Park_Name = t_area_name AND "
+            + "p_Park_Code = pl_Park_Code AND "
+            + "pl_Species IN (SELECT pl_Species "
+            + "                     FROM Plants "
+            + "                     WHERE pl_Park_Code = 'YOSE') AND "
+            + "t_name IN (SELECT t_name "
+            + "              FROM Trails "
+            + "              WHERE t_area_name = 'Yosemite National Park') "
+            + "Order BY t_name; ";
+
+            PreparedStatement stmt = c.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String var1 = rs.getString(1);
+                String var2 = rs.getString(2);
+                String var3 = rs.getString(3);
+                String var4 = rs.getString(4);
+                String var5 = rs.getString(5); 
+                System.out.println("\t" + var1 + "|" + var2 + "|" + var3 + "|" + var4 + "|" + var5);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        //2. 
+        System.out.println("Find Trails and species of animals you might see on the Trails in Yosemite");
+
+        try {
+            String sql = "SELECT Distinct p_Park_Name, s_Common_Names, t_name, t_geoloc, t_route_length "
+            + "FROM Park_Locations, Trails, Species "
+            + "WHERE p_Park_Name = t_area_name AND "
+            + "p_Park_Name = s_Park_name AND "
+            + "s_Common_Names IN (SELECT s_Common_Names "
+            + "                     FROM Species "
+            + "                     WHERE s_Park_name = 'Yosemite National Park') AND "
+            + "t_name IN (SELECT t_name "
+            + "              FROM Trails "
+            + "              WHERE t_area_name = 'Yosemite National Park') "
+            + "ORDER BY s_Common_Names; ";
+
+            PreparedStatement stmt = c.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String var1 = rs.getString(1);
+                String var2 = rs.getString(2);
+                String var3 = rs.getString(3);
+                String var4 = rs.getString(4);
+                String var5 = rs.getString(5); 
+                System.out.println("\t" + var1 + "|" + var2 + "|" + var3 + "|" + var4 + "|" + var5);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        //3.
+    }
 
     public int Introduction() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Hi and welcome to Camping Buddy!  I\u2019m an app that "
+        System.out.println("Hi and welcome to Camping Buddy!  I'm an app that "
                 + "can get you the information you seek about California National Parks!  :)\n");
-        System.out.println("First, Let\u2019s get some information from you.\n");
+        System.out.println("First, Let's get some information from you.\n");
         System.out.println("Please select one of the following options:");
         System.out.println("1. Would you like to dive and see all available info?");
         System.out.println("\tOR");
-        System.out.println("2. Look at some of our most popular queries");
+        System.out.println("20. Look at some of our most popular queries");
 
         int initialChoice = sc.nextInt();
+
         if (initialChoice == 1) { // All info
             System.out.println("What park would you like to visit?  (Select the number adjacent to the park)");
             System.out.println("\t1. Channel Islands National Park");
@@ -1113,20 +1197,19 @@ public class campingBuddy {
             return parkChoice;
         }
 
-        else if (initialChoice == 2) { // Popular
-            return 8;
+        else if (initialChoice == 20) { // Popular
+            return 9;
 
         }
 
         else if (initialChoice == 6789) { // Admin privileges
-            return 9;
+            return 10;
         }
 
         else {// Mistake
             System.out.println("You have to select 1 or 2 only!");
+            return 50;
         }
-
-        return initialChoice;
     }
 
     public static void main(String[] args) {
@@ -1136,14 +1219,17 @@ public class campingBuddy {
 
         // sj.openConnection("data/tpch.sqlite");
         sj.openConnection("DBFinalProject/Data/CAPark.sqlite");
+
         int firstChoice = sj.Introduction();
         String parkChoice = "default";
-        if (firstChoice < 8) {
+
+        if (firstChoice <= 8) {
             parkChoice = sj.parkNames(firstChoice);
             System.out.println(parkChoice + ", great choice!\n");
             ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
             infoNumsChosen = sj.parkInfo();
             Collections.sort(infoNumsChosen);
+
             for (int j : infoNumsChosen) {
                 switch (j) {
                     case 1:
@@ -1174,30 +1260,38 @@ public class campingBuddy {
                         sj.Trails(parkChoice);
                         System.out.println("OK, next up is...");
                         break;
-                    case 8: // Premade suggested queries
-                        break;
-                    case 9: // Admin stuff
-                        break;
                     default:
                         // code block
                 }
             }
         }
 
-        else if (firstChoice == 8) {
-            ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
-            infoNumsChosen.add(8);
+        else if (firstChoice == 9) { //Premade
+            // ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
+            // infoNumsChosen.add(9);
+
+            sj.Popular();
         }
 
-        else if (firstChoice == 9) {
-            ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
-            infoNumsChosen.add(9);
+        else if (firstChoice == 10) { //Admin
+            // ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
+            // infoNumsChosen.add(10);
+            System.out.println("Welcome Admin");
+            System.out.println("What would you like to do?");
+            System.out.println("\t1. Update table");
+            System.out.println("\t2. Insert into table");
+            System.out.println("\t3. Delete from table");
+            System.out.println("\t0. Nothing else, I'm done!");
         }
 
         else {
             ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
             infoNumsChosen.add(10);
         }
+
+        // ArrayList<Integer> infoNumsChosen = new ArrayList<Integer>();
+        // infoNumsChosen = sj.parkInfo();
+        // Collections.sort(infoNumsChosen);
 
         System.out.println("Nothing! Mission complete! Have a good day!");
 
